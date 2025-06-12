@@ -4,9 +4,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 	<h1><%=title%></h1>
 	<%-include('./partials/navbar')%>
+	<div class="container">
+	    <h1>Room List</h1>
+	    <div class="grid">
+	      <% rooms.forEach(room => { %>
+	        <div class="card <%= room.status %>">
+	          <h2><%= room.name %></h2>
+	          <p><strong>Room Number:</strong> <%= room.room_number %></p>
+	          <p><strong>Status:</strong> <%= room.status %></p>
+	          <p><strong>Floor:</strong> <%= room.floor %></p>
+	          <p><strong>Created:</strong> <%= new Date(room.created_at).toLocaleDateString() %></p>
+	        </div>
+	      <% }) %>
+	    </div>
+	</div>
 </body>
 </html>

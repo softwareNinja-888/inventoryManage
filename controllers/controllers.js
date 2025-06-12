@@ -1,55 +1,39 @@
 const db = require("../db/queries");
 
-function determineView(path){
-	switch (path) {
-		case '/':
-			return 'index'
-			break;
-		case '/types':
-			return 'viewCategory'
-			break;
-		case '/features':
-			return 'viewFeatures'
-			break;
-		case '/rooms':
-			return 'viewRooms'
-			break;
-		default:
-			console.log('Page not added')
-}
 
-}
 
 exports.home = async (req,res)=>{
 	res.render('index',{
 		title:'Home Page',
 	})
 }
+
 // VIEW CONTROLLERS:
 exports.viewRooms = async (req,res)=>{
 	const rooms = await db.getAllRooms();
-	console.log("Usernames: ", determineView(req.path));
+	console.log("Usernames: ",rooms);
 
-	res.render( determineView(req.path),{
+	res.render( 'viewRooms',{
 		title:'View Rooms',
+		rooms:rooms
 	})
 }
 
-// exports.viewRooms = async (req,res)=>{
-// 	const rooms = await db.getAllRooms();
-// 	console.log("Usernames: ", rooms);
+exports.viewCategories = async (req,res)=>{
+	const categories = await db.getAllRoomTypes();
 
-// 	res.render('viewRooms',{
-// 		title:'View Rooms',
-// 	})
-// }
+	res.render('viewCategories',{
+		title:'View Categories',
+		categories:categories
+	})
+}
 
-// exports.viewRooms = async (req,res)=>{
-// 	const rooms = await db.getAllRooms();
-// 	console.log("Usernames: ", rooms);
+exports.viewFeatures = async (req,res)=>{
+	const features = await db.getAllFeatures();
 
-// 	res.render('viewRooms',{
-// 		title:'View Rooms',
-// 	})
-// }
+	res.render('viewFeatures',{
+		title:'View Features',
+		features:features
+	})
+}
 

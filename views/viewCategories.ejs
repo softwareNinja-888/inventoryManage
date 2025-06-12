@@ -11,15 +11,16 @@
 	<h1><%=title%></h1>
 	<%-include('./partials/navbar')%>
 	<div class="container">
-	    <h1>Feature List</h1>
+	    <h1>Category List</h1>
 	    <div class="grid">
-	      <% features.forEach(feat => { %>
+	      <% categories.forEach(cat => { %>
 	        <div class="card">
-	          <h2><%= feat.name %></h2>
+	          <h2><%= cat.name %></h2>
+	          <p><strong>Description:</strong> <%= cat.description %></p>
+	          <p><strong>Price:</strong> <%= cat.base_price %></p>
 	        </div>
 	      <% }) %>
 	    </div>
 	</div>
-
 </body>
 </html>

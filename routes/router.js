@@ -6,8 +6,8 @@ const controllers = require('../controllers/controllers')
 // VIEW CONTROLLERS
 router.get('/',controllers.home)
 router.get('/rooms',controllers.viewRooms)
-router.get('/types',controllers.viewRooms)
-router.get('/features',controllers.viewRooms)
+router.get('/categories',controllers.viewCategories)
+router.get('/features',controllers.viewFeatures)
 
 // router.get('/rooms',controllers.viewRooms)
 

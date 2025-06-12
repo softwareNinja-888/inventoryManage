@@ -38,7 +38,47 @@ VALUES
   ('201', 'Deluxe Room 201', 'booked', 2, 2),
   ('301', 'Suite Room 301', 'available', 3, 3)
 ON CONFLICT (room_number) DO NOTHING;
+
+-- Create room_features table
+CREATE TABLE IF NOT EXISTS room_features (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Create join table for room-feature relationships
+CREATE TABLE IF NOT EXISTS room_feature_assignments (
+  room_id INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
+  feature_id INTEGER REFERENCES room_features(id) ON DELETE CASCADE,
+  PRIMARY KEY (room_id, feature_id)
+);
+
+-- Insert features
+INSERT INTO room_features (name)
+VALUES 
+  ('Air Conditioning'),
+  ('Wi-Fi'),
+  ('TV'),
+  ('Balcony'),
+  ('Mini Fridge'),
+  ('Coffee Maker')
+ON CONFLICT (name) DO NOTHING;
+
+-- Example feature assignments (room 101 has AC and Wi-Fi, etc.)
+INSERT INTO room_feature_assignments (room_id, feature_id)
+VALUES 
+  (1, 1),  -- Room 101, Air Conditioning
+  (1, 2),  -- Room 101, Wi-Fi
+  (2, 1),  -- Room 102, Air Conditioning
+  (3, 2),  -- Room 201, Wi-Fi
+  (3, 3),  -- Room 201, TV
+  (4, 1),  -- Room 301, Air Conditioning
+  (4, 2),  -- Room 301, Wi-Fi
+  (4, 3),  -- Room 301, TV
+  (4, 4)   -- Room 301, Balcony
+ON CONFLICT DO NOTHING;
 `;
+
+
 
 
 async function main() {
