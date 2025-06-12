@@ -11,7 +11,7 @@ router.get('/features',controllers.viewFeatures)
 
 router.get('/addFeature',controllers.addFeature)
 router.post('/addFeature',controllers.postFeature)
-router.post('/removeFeature',controllers.removeFeature)
+
 // router.get('/rooms',controllers.viewRooms)
 
 module.exports=router;

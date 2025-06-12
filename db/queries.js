@@ -14,11 +14,18 @@ async function getAllRoomTypes() {
 
 async function getAllFeatures() {
   const { rows } = await pool.query("SELECT * FROM room_features");
-  console.log('Feat',rows)
-
-  // const { rows } = await pool.query("SELECT * FROM room_feature_assignments");
-
   return rows;
+}
+async function insertFeature(feature) {
+  await pool.query("INSERT INTO room_features (name) VALUES ($1)", [feature]);
+}
+async function removeFeature(featureId) {
+  try {
+    await pool.query("DELETE FROM room_features WHERE id = $1", [featureId]);
+  } catch (err) {
+    console.error("Error deleting feature:", err);
+    throw err;
+  }
 }
 
 async function insertRoom(username) {
@@ -29,5 +36,7 @@ module.exports = {
   getAllRooms,
   getAllRoomTypes,
   getAllFeatures,
+  removeFeature,
+  insertFeature,
   insertRoom
 };

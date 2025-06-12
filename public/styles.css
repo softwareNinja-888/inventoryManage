@@ -49,6 +49,9 @@
 
 /* Navbar container */
 .navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
   background-color: #333;
   padding: 1rem 2rem;
 }
@@ -72,4 +75,12 @@
 
 .nav-list li a:hover {
   color: #f0c040; /* golden highlight on hover */
+}
+
+/* in styles.css */
+.error-list {
+  color: #d8000c;
+  background: #ffbaba;
+  padding: 1rem;
+  border-radius: 5px;
 }
