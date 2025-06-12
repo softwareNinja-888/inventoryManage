@@ -7,5 +7,10 @@
 </head>
 <body>
 	<h1><%=title%></h1>
+	<ul>
+		<% usernames.map(user=>{ %>
+			<li><%=user.username%></li>
+		<%})%>
+	</ul>
 </body>
 </html>
