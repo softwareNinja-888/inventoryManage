@@ -1,14 +1,55 @@
 const db = require("../db/queries");
 
-exports.home = async (req,res)=>{
-	const usernames = await db.getAllUsernames();
-	console.log("Usernames: ", usernames);
+function determineView(path){
+	switch (path) {
+		case '/':
+			return 'index'
+			break;
+		case '/types':
+			return 'viewCategory'
+			break;
+		case '/features':
+			return 'viewFeatures'
+			break;
+		case '/rooms':
+			return 'viewRooms'
+			break;
+		default:
+			console.log('Page not added')
+}
 
+}
+
+exports.home = async (req,res)=>{
 	res.render('index',{
 		title:'Home Page',
-		usernames:usernames
+	})
+}
+// VIEW CONTROLLERS:
+exports.viewRooms = async (req,res)=>{
+	const rooms = await db.getAllRooms();
+	console.log("Usernames: ", determineView(req.path));
+
+	res.render( determineView(req.path),{
+		title:'View Rooms',
 	})
 }
 
-// module.exports = {
-// };
+// exports.viewRooms = async (req,res)=>{
+// 	const rooms = await db.getAllRooms();
+// 	console.log("Usernames: ", rooms);
+
+// 	res.render('viewRooms',{
+// 		title:'View Rooms',
+// 	})
+// }
+
+// exports.viewRooms = async (req,res)=>{
+// 	const rooms = await db.getAllRooms();
+// 	console.log("Usernames: ", rooms);
+
+// 	res.render('viewRooms',{
+// 		title:'View Rooms',
+// 	})
+// }
+
