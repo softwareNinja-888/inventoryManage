@@ -1,0 +1,25 @@
+const { body } = require('express-validator');
+
+const roomValidationRules = [
+  body('roomName')
+    .trim()
+    .notEmpty().withMessage('Room name is required.')
+    .isLength({ min: 3, max: 50 }).withMessage('Room name must be 3–50 characters.')
+    .matches(/^[a-zA-Z0-9\s]+$/).withMessage('Room name must contain only letters, numbers, and spaces.'),
+
+  body('roomNumber')
+    .notEmpty().withMessage('Room number is required.')
+    .isInt({ min: 1 }).withMessage('Room number must be a positive number.'),
+
+  body('roomType')
+    .notEmpty().withMessage('Room type is required.')
+    .isIn(['1', '2', '3']).withMessage('Invalid room type.'),
+
+  body('roomStatus')
+    .notEmpty().withMessage('Room status is required.')
+    .isIn(['available', 'maintenance', 'booked']).withMessage('Invalid room status.'),
+
+  body('roomFloor')
+    .notEmpty().withMessage('Room floor is required.')
+    .isIn(['1', '2', '3']).withMessage('Invalid room floor.'),
+];

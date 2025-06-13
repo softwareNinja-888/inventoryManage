@@ -7,6 +7,47 @@
 	<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-	
+	<%-include('./partials/navbar')%>
+	  <% if (errors && errors.length > 0) { %>
+	    <ul style="color: red;">
+	      <% errors.forEach(error => { %>
+	        <li><%= error.msg %></li>
+	      <% }) %>
+	    </ul>
+	  <% } %>
+
+	<form action="/addRoom" method="POST" class="room-form">
+		<div class="form-group">
+		  <label for="roomName">Room Name:</label>
+		  <input type="text" id="roomName" name="roomName" value="<%= typeof oldInput !== 'undefined' ? oldInput : '' %>" required>
+	  
+		  <label for="roomNumber">Room Number:</label>
+		  <input type="text" id="roomNumber" name="roomNumber" value="<%= typeof oldInput !== 'undefined' ? oldInput : '' %>" required>
+	  
+		  <label for="roomType">Room Type:</label>
+		  <select name="roomType" id="roomType" required>
+			<option value="1">Standard</option>
+			<option value="2">Deluxe</option>
+			<option value="3">Suite</option>
+		  </select>
+	  
+		  <label for="roomStatus">Room Status:</label>
+		  <select name="roomStatus" id="roomStatus" required>
+			<option value="available">Available</option>
+			<option value="maintenance">Maintenance</option>
+			<option value="booked">Booked</option>
+		  </select>
+	  
+		  <label for="roomFloor">Room Floor:</label>
+		  <select name="roomFloor" id="roomFloor" required>
+			<option value="1">First Floor</option>
+			<option value="2">Second Floor</option>
+			<option value="3">Third Floor</option>
+		  </select>
+		</div>
+		<button type="submit" class="submit-btn">Add Room</button>
+	  </form>
+	  
+
 </body>
 </html>

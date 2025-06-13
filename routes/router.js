@@ -9,9 +9,14 @@ router.get('/rooms',controllers.viewRooms)
 router.get('/categories',controllers.viewCategories)
 router.get('/features',controllers.viewFeatures)
 
+// FEATURE 
 router.get('/addFeature',controllers.addFeature)
 router.post('/addFeature',controllers.postFeature)
 router.post('/removeFeature',controllers.removeFeature)
-// router.get('/rooms',controllers.viewRooms)
+
+// ROOM
+router.get('/addRoom',controllers.addRoom)
+router.post('/addRoom',controllers.postRoom)
+// router.post('/removeRoom',controllers.removeFeature)
 
 module.exports=router;

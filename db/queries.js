@@ -17,7 +17,12 @@ async function getAllFeatures() {
   return rows;
 }
 async function insertFeature(feature) {
-  await pool.query("INSERT INTO room_features (name) VALUES ($1)", [feature]);
+  try {
+    await pool.query("INSERT INTO room_features (name) VALUES ($1)", [feature]);
+  } catch (err) {
+    console.error("Error inserting feature:", err);
+    throw err;
+  }
 }
 async function removeFeature(featureId) {
   try {
@@ -28,8 +33,14 @@ async function removeFeature(featureId) {
   }
 }
 
-async function insertRoom(username) {
-  await pool.query("INSERT INTO usernames (username) VALUES ($1)", [username]);
+async function insertRoom(roomData) {
+    try {
+      await pool.query("INSERT INTO rooms (room_number,name,status,room_type_id,floor) VALUES ($1,$2,$3,$4,$5)", 
+        [roomData.roomNumber,roomData.roomName,roomData.roomStatus,roomData.roomtypeId,roomData.roomFloor,]);
+    } catch (err) {
+      console.error("Error inserting room:", err);
+      throw err;
+    }
 }
 
 module.exports = {
