@@ -17,6 +17,9 @@ router.post('/removeFeature',controllers.removeFeature)
 // ROOM
 router.get('/addRoom',controllers.addRoom)
 router.post('/addRoom',controllers.postRoom)
-// router.post('/removeRoom',controllers.removeFeature)
+
+// CATEGORY
+router.get('/addCategory',controllers.addCategory)
+router.post('/addCategory',controllers.postCategory)
 
 module.exports=router;

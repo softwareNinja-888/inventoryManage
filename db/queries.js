@@ -1,20 +1,30 @@
 const pool = require("./pool");
 
+// GET
+
 async function getAllRooms() {
   const { rows } = await pool.query("SELECT * FROM rooms");
   return rows;
 }
-
-
 async function getAllRoomTypes() {
   const { rows } = await pool.query("SELECT * FROM room_types");
-  console.log('Cat',rows)
   return rows;
 }
-
 async function getAllFeatures() {
   const { rows } = await pool.query("SELECT * FROM room_features");
   return rows;
+}
+
+// INSERT 
+
+async function insertRoom(roomData) {
+  try {
+    await pool.query("INSERT INTO rooms (room_number,name,status,room_type_id,floor) VALUES ($1,$2,$3,$4,$5)", 
+      [roomData.roomNumber,roomData.roomName,roomData.roomStatus,roomData.roomtypeId,roomData.roomFloor,]);
+  } catch (err) {
+    console.error("Error inserting room:", err);
+    throw err;
+  }
 }
 async function insertFeature(feature) {
   try {
@@ -24,6 +34,17 @@ async function insertFeature(feature) {
     throw err;
   }
 }
+async function insertCategory(categoryData) {
+  try {
+    await pool.query("INSERT INTO room_types (name,description,base_price) VALUES ($1,$2,$3)", 
+      [categoryData.categoryName,categoryData.categoryDescription,categoryData.basePrice]);
+  } catch (err) {
+    console.error("Error inserting category:", err);
+    throw err;``
+  }
+}
+
+// DELETE
 async function removeFeature(featureId) {
   try {
     await pool.query("DELETE FROM room_features WHERE id = $1", [featureId]);
@@ -33,21 +54,14 @@ async function removeFeature(featureId) {
   }
 }
 
-async function insertRoom(roomData) {
-    try {
-      await pool.query("INSERT INTO rooms (room_number,name,status,room_type_id,floor) VALUES ($1,$2,$3,$4,$5)", 
-        [roomData.roomNumber,roomData.roomName,roomData.roomStatus,roomData.roomtypeId,roomData.roomFloor,]);
-    } catch (err) {
-      console.error("Error inserting room:", err);
-      throw err;
-    }
-}
 
 module.exports = {
   getAllRooms,
   getAllRoomTypes,
   getAllFeatures,
-  removeFeature,
   insertFeature,
-  insertRoom
+  insertRoom,
+  insertCategory,
+  removeFeature,
+  
 };

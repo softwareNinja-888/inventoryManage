@@ -40,6 +40,25 @@ const validateRoom = [
 		.notEmpty().withMessage('Room floor is required.')
 		.isIn(['1', '2', '3']).withMessage('Invalid room floor.'),
 ];
+
+const validateCategory = [
+		body('categoryName')
+		.trim()
+		.notEmpty().withMessage('Category name is required.')
+		.isLength({ min: 3, max: 50 }).withMessage('Category name must be 3–50 characters.')
+		.matches(/^[a-zA-Z0-9\s]+$/).withMessage('Category name must contain only letters, numbers, and spaces.'),
+	
+		body('categoryDescription')
+		.trim()
+		.notEmpty().withMessage('Category Description is required.')
+		.isLength({ min: 3, max: 50 }).withMessage('Category Description must be 3–50 characters.')
+		.matches(/^[a-zA-Z0-9\s]+$/).withMessage('Category Description must contain only letters, numbers, and spaces.'),,
+	
+		body('basePrice')
+		.notEmpty().withMessage('Average price is required.')
+		.isInt({ min: 1 }).withMessage('Average price must be a positive number.'),
+]
+
 exports.home = async (req,res)=>{
 	res.render('index',{
 		title:'Home Page',
@@ -162,13 +181,13 @@ exports.postRoom =  [
 
 // CATEGORY FUNCTIONALITY
 
-// exports.addRoom = async (req,res)=>{
-// 	res.render('addRoom',{
-// 	    errors: [],
-// 	})
-// }
+exports.addCategory = async (req,res)=>{
+	res.render('addCategory',{
+	    errors: [],
+	})
+}
 
-// exports.removeRoom = async (req,res)=>{
+// exports.removeCategory = async (req,res)=>{
 // 	const id = req.body.roomId;
 // 	try {
 // 		await db.removeFeature(id)
@@ -179,26 +198,31 @@ exports.postRoom =  [
 // 	}
 // }
 
-// // TODO: VALIDATE SO USERS CANT ADD DUPLICATE FEATURES
-// exports.postFeature =  [
-// 	validate,
-// 	async (req, res) => {
-// 		const errors = validationResult(req)
-// 		if(!errors.isEmpty()){
-// 			return res.status(400).render('addFeature',{
-//         title: "Post Feature",
-//         errors: errors.array(),
-//         oldInput:req.body.featureName
-// 			})
-// 		}
-// 	  try {
-// 		  const featureName = req.body.featureName;
-// 		  await db.insertFeature(featureName);
-// 		  res.redirect('/features');
-// 		} catch (err) {
-// 		  console.error(err);
-// 		  res.status(500).send("Error inserting feature.");
-// 		}
+exports.postCategory = (req,res)=>{
+	console.log(req.body)
+	res.send('Li')
+}
 
-// 	}
-// ]
+// TODO: VALIDATE SO USERS CANT ADD DUPLICATE FEATURES
+exports.postCategory =  [
+	validateCategory,
+	async (req, res) => {
+		const errors = validationResult(req)
+		if(!errors.isEmpty()){
+			return res.status(400).render('addCategory',{
+				title: "Post Category",
+				errors: errors.array(),
+				oldInput:req.body
+			})
+		}
+	  try {
+		  const categoryData = req.body;
+		  await db.insertCategory(categoryData);
+		  res.redirect('/categories');
+		} catch (err) {
+		  console.error(err);
+		  res.status(500).send("Error inserting category.");
+		}
+
+	}
+]
