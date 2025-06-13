@@ -16,10 +16,16 @@
 	      <% features.forEach(feat => { %>
 	        <div class="card">
 	          <h2><%= feat.name %></h2>
+			  <div class="cardBtns">
 				<form action="/removeFeature" method="POST" style="display:inline;">
-				  <input type="hidden" name="featureId" value="<%=feat.id%>">
-				  <button type="submit">Remove</button>
-				</form>
+					<input type="hidden" name="featureId" value="<%=feat.id%>">
+					<button type="submit" class="submit-btn">Remove</button>
+				  </form>
+				  <form action="/removeFeature" method="POST" style="display:inline;">
+					<input type="hidden" name="featureId" value="<%=feat.id%>">
+					<button type="submit" class="submit-btn">Rooms with <%=feat.name%></button>
+				  </form>
+			  </div>
 	        </div>
 	      <% }) %>
 	    </div>

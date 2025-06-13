@@ -19,6 +19,14 @@
 	          <p><strong>Status:</strong> <%= room.status %></p>
 	          <p><strong>Floor:</strong> <%= room.floor %></p>
 	          <p><strong>Created:</strong> <%= new Date(room.created_at).toLocaleDateString() %></p>
+			  <form action="/removeRoom" method="POST" style="display:inline;">
+				<input type="hidden" name="roomId" value="<%=room.id%>">
+				<button type="submit" class="submit-btn">Remove</button>
+			  </form>
+			  <form action="/editRoom/<%=room.id%>" method="get" style="display:inline;">
+				<input type="hidden" name="roomId" value="<%=room.id%>">
+				<button type="submit" class="submit-btn">Edit </button>
+			  </form>
 	        </div>
 	      <% }) %>
 	    </div>

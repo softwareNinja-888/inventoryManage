@@ -16,13 +16,14 @@
 	    </ul>
 	  <% } %>
 
-	<form action="/addFeature"  method="POST">
-		<div>
+	<form action="/addFeature"  method="POST" class="room-form">
+		<div class="form-group">
 			<label for="featureName">Feature Name:</label>
 			<input type="text" id="featureName" name="featureName" value="<%= typeof oldInput !== 'undefined' ? oldInput : '' %>" required>
 		</div>
-		<button type="submit">Add Feature</button>
+		<button type="submit" class="submit-btn">Add Feature</button>
 	</form>
+
 
 </body>
 </html>

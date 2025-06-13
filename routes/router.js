@@ -17,6 +17,10 @@ router.post('/removeFeature',controllers.removeFeature)
 // ROOM
 router.get('/addRoom',controllers.addRoom)
 router.post('/addRoom',controllers.postRoom)
+router.post('/removeRoom',controllers.removeRoom)
+// EDIT
+router.get('/editRoom/:id',controllers.editRoom)
+router.post('/editRoom/:id',controllers.postEditRoom)
 
 // CATEGORY
 router.get('/addCategory',controllers.addCategory)

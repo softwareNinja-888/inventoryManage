@@ -1,3 +1,4 @@
+const { render } = require("ejs");
 const db = require("../db/queries");
 
 const { body, validationResult } = require("express-validator");
@@ -68,7 +69,6 @@ exports.home = async (req,res)=>{
 // VIEW CONTROLLERS:
 exports.viewRooms = async (req,res)=>{
 	const rooms = await db.getAllRooms();
-	console.log("Usernames: ",rooms);
 
 	res.render( 'viewRooms',{
 		title:'View Rooms',
@@ -142,17 +142,47 @@ exports.addRoom = async (req,res)=>{
 	    errors: [],
 	})
 }
-
 exports.removeRoom = async (req,res)=>{
 	const id = req.body.roomId;
 	try {
-		await db.removeFeature(id)
+		await db.removeRoom(id)
 		res.redirect('/rooms');
 	} catch (err) {
 		console.error(err);
 		res.status(500).send("Error Deleting room.");
 	}
 }
+exports.editRoom= async (req,res)=>{
+	const roomData = await db.getRoom(req.params.id)
+	res.render('editRoom',{
+		id:req.params.id,
+		oldInput:roomData[0]
+	})
+}
+
+exports.postEditRoom  =  [
+	validateRoom,
+	async (req, res) => {
+		const errors = validationResult(req)
+		if(!errors.isEmpty()){
+			return res.status(400).render('editRoom',{
+				title: "Post Room",
+				errors: errors.array(),
+				oldInput:req.body
+			})
+		}
+	  try {
+		  const roomId = req.params.id;
+		  const roomData = req.body;
+		  await db.updateRoom(roomId,roomData)
+		  res.redirect('/rooms');
+		} catch (err) {
+		  console.error(err);
+		  res.status(500).send("Error updating the room.");
+		}
+
+	}
+]
 
 // TODO: VALIDATE SO USERS CANT ADD DUPLICATE FEATURES
 exports.postRoom =  [

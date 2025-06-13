@@ -1,7 +1,10 @@
 const pool = require("./pool");
 
 // GET
-
+async function getRoom(id) {
+  const { rows } = await pool.query("SELECT * FROM rooms WHERE id = $1",[id])
+  return rows
+}
 async function getAllRooms() {
   const { rows } = await pool.query("SELECT * FROM rooms");
   return rows;
@@ -45,6 +48,7 @@ async function insertCategory(categoryData) {
 }
 
 // DELETE
+
 async function removeFeature(featureId) {
   try {
     await pool.query("DELETE FROM room_features WHERE id = $1", [featureId]);
@@ -53,9 +57,38 @@ async function removeFeature(featureId) {
     throw err;
   }
 }
+async function removeRoom(roomId) {
+  try {
+    await pool.query("DELETE FROM rooms WHERE id = $1", [roomId]);
+  } catch (err) {
+    console.error("Error deleting room:", err);
+    throw err;
+  }
+}
+async function removeCategory(categoryId) {
+  try {
+    await pool.query("DELETE FROM room_types WHERE id = $1", [categoryId]);
+  } catch (err) {
+    console.error("Error deleting category:", err);
+    throw err;
+  }
+}
+
+// UPDATE
+async function updateRoom(id,roomData) {
+  try {
+    await pool.query("UPDATE rooms SET room_number=$1, name=$2, status=$3, room_type_id=$4, floor=$5 WHERE id = $6"
+    , 
+      [roomData.roomNumber,roomData.roomName,roomData.roomStatus,roomData.roomtypeId,roomData.roomFloor,id]);
+  } catch (err) {
+    console.error("Error inserting room:", err);
+    throw err;
+  }
+}
 
 
 module.exports = {
+  getRoom,
   getAllRooms,
   getAllRoomTypes,
   getAllFeatures,
@@ -63,5 +96,7 @@ module.exports = {
   insertRoom,
   insertCategory,
   removeFeature,
-  
+  removeRoom,
+  removeCategory,
+  updateRoom
 };
